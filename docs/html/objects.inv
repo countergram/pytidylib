@@ -1,0 +1,6 @@
+# Sphinx inventory version 1
+# Project: pytidylib
+# Version: 0.1
+tidylib.release_tidy_doc function index.html
+tidylib.tidy_fragment function index.html
+tidylib.tidy_document function index.html
