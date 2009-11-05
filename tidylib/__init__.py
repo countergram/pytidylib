@@ -44,7 +44,9 @@ BASE_OPTIONS = {
     }
     
 # Note: These are meant as sensible defaults. If you don't like these being
-# applied by default, just set tidylib.BASE_OPTIONS = {} after importing
+# applied by default, just set tidylib.BASE_OPTIONS = {} after importing.
+# You can of course override any of these options when you call the
+# tidy_document() or tidy_fragment() function
 
 #----------------------------------------------------------------------------#
 # Globals
