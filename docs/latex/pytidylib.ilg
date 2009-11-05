@@ -1,7 +1,0 @@
-This is makeindex, version 2.15 [20-Nov-2007] (kpathsea + Thai support).
-Scanning style file ./python.ist......done (6 attributes redefined, 0 ignored).
-Scanning input file pytidylib.idx....done (3 entries accepted, 0 rejected).
-Sorting entries....done (5 comparisons).
-Generating output file pytidylib.ind....done (12 lines written, 0 warnings).
-Output written in pytidylib.ind.
-Transcript written in pytidylib.ilg.

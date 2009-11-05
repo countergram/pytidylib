@@ -1,7 +1,0 @@
-\select@language {english}
-\contentsline {section}{\numberline {1}Installing TidyLib}{ii}{section.1}
-\contentsline {section}{\numberline {2}Installing pytidylib}{ii}{section.2}
-\contentsline {section}{\numberline {3}Trivial example of use}{ii}{section.3}
-\contentsline {section}{\numberline {4}Configuration options}{ii}{section.4}
-\contentsline {section}{\numberline {5}Function reference}{iii}{section.5}
-\contentsline {chapter}{Index}{v}{section*.1}
