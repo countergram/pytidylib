@@ -21,6 +21,7 @@
 import ctypes
 import sys
 import threading
+import platform
 
 try:
     from cStringIO import StringIO
@@ -39,7 +40,13 @@ sink_id_lock = threading.Lock()
 #----------------------------------------------------------------------------#
 # ctypes type definitions
 
-PutByteType = ctypes.CFUNCTYPE(None, ctypes.c_int, ctypes.c_char)
+# Fix for Windows b/c tidy uses stdcall on Windows
+if "Windows" == platform.system():
+    functype = ctypes.WINFUNCTYPE
+else:
+    functype = ctypes.CFUNCTYPE
+
+PutByteType = functype(None, ctypes.c_int, ctypes.c_char)
 
 class TidyOutputSink(ctypes.Structure):
     """ Mirrors the _TidyOutputSink structure in tidy.h """
