@@ -21,43 +21,53 @@
 from distutils.core import setup
 
 longdesc = """\
-A new Python wrapper for tidylib_, which allows
-you to convert slightly invalid HTML/XHTML markup into valid markup. E.g. this
-will correct unescaped ampersands, some unclosed tags, missing elements,
-missing attributes, etc. Tidylib is highly configurable; it can output HTML or
-XHTML, and perform other functions such as converting named entities to numeric
-entities (named entities work only along with an HTML or XHTML doctype;
-numeric entities work in generic XML data).
+0.2.0: Works on Windows! See documentation for available DLL download
+locations. Documentation rewritten and expanded.
 
-Note 1: The SourceForge download mirror has been corrected.
+`PyTidyLib`_ is a Python package that wraps the `HTML Tidy`_ library. This
+allows you, from Python code, to "fix" invalid (X)HTML markup. Some of the
+library's many capabilities include:
 
-Note 2: Unfortunately, neither this library, nor uTidyLib, nor a barebones
-test case seems to work with the prepackaged tidy.dll on Windows. Until this
-is fixed, this is a Linux/BSD/OS X/Cygwin library.
+* Clean up unclosed tags and unescaped characters such as ampersands
+* Output HTML 4 or XHTML, strict or transitional, and add missing doctypes
+* Convert named entities to numeric entities, which can then be used in XML
+  documents without an HTML doctype.
+* Clean up HTML from programs such as Word (to an extent)
+* Indent the output, including proper (i.e. no) indenting for ``pre`` elements,
+  which some (X)HTML indenting code overlooks.
 
-Trivial example of use::
+Small example of use
+====================
+
+The following code cleans up an invalid HTML document and sets an option::
 
     from tidylib import tidy_document
     document, errors = tidy_document('''<p>f&otilde;o <img src="bar.jpg">''',
-        options={'numeric-entities':1})
+      options={'numeric-entities':1})
     print document
     print errors
     
-For documentation see the `pytidylib project page`_
-    
-.. _tidylib: http://tidy.sourceforge.net/
-.. _`pytidylib project page`: http://countergram.com/software/pytidylib/
+Docs
+====
+
+Documentation is shipped with the source distribution and is available at
+the `PyTidyLib`_ web page.
+
+.. _`HTML Tidy`: http://tidy.sourceforge.net/
+.. _`PyTidyLib`: http://countergram.com/open-source/pytidylib/
 """
+
+VERSION = "0.2.0"
 
 setup(
     name="pytidylib",
-    version="0.1.2",
-    description="New Python wrapper for tidylib",
+    version=VERSION,
+    description="Python wrapper for HTML Tidy (tidylib)",
     long_description=longdesc,
     author="Jason Stitt",
     author_email="js@jasonstitt.com",
-    url="http://countergram.com/software/pytidylib/",
-    download_url="https://sourceforge.net/projects/pytidylib/files/pytidylib-0.1.2.tar.gz/download",
+    url="http://countergram.com/open-source/pytidylib/",
+    download_url="http://cloud.github.com/downloads/countergram/pytidylib/pytidylib-%s.tar.gz" % VERSION,
     packages=['tidylib'],
     classifiers=[
           'Development Status :: 4 - Beta',

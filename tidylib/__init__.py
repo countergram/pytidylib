@@ -76,21 +76,22 @@ tidy.tidyCreate.restype = ctypes.POINTER(ctypes.c_void_p) # Fix for 64-bit syste
 # Functions
 
 def tidy_document(text, options=None, keep_doc=False):
-    """ Run a string with markup through Tidy and return the entire document.
+    """ Run a string with markup through HTML Tidy; return the corrected one.
     
     text (str): The markup, which may be anything from an empty string to a
-    complete XHTML document. Unicode values are supported; they will be
-    encoded as utf-8, and tidylib's output will be decoded back to a unicode
+    complete (X)HTML document. Unicode values are supported; they will be
+    encoded as utf-8, and HTML Tidy's output will be decoded back to a unicode
     object.
     
-    options (dict): Options passed directly to tidylib; see the tidylib docs
-    or run tidy -help-config from the command line.
+    options (dict): Options passed directly to HTML Tidy; see the HTML Tidy docs
+    (http://tidy.sourceforge.net/docs/quickref.html) or run tidy -help-config
+    from the command line.    
     
     keep_doc (boolean): If True, store 1 document object per thread and re-use
     it, for a slight performance boost especially when tidying very large numbers
     of very short documents.
     
-    -> (str, str): The tidied markup [0] and warning/error messages[1].
+    returns (str, str): The tidied markup [0] and warning/error messages[1].
     Warnings and errors are returned just as tidylib returns them.
     """
     global tidy, option_names
@@ -158,13 +159,14 @@ def tidy_document(text, options=None, keep_doc=False):
     
     
 def tidy_fragment(text, options=None, keep_doc=False):
-    """ Tidy a string with markup and return it without the rest of the document.
-    Tidy normally returns a full XHTML document; this function returns only
+    """ Tidy a string with markup and return only the <body> contents.
+    
+    HTML Tidy normally returns a full (X)HTML document; this function returns only
     the contents of the <body> element and is meant to be used for snippets.
     Calling tidy_fragment on elements that don't go in the <body>, like <title>,
-    will produce odd behavior.
+    will produce incorrect behavior.
     
-    Arguments and return value as tidy_document. Note that tidy will always
+    Arguments and return value as tidy_document. Note that HTML Tidy will always
     complain about the lack of a doctype and <title> element in fragments,
     and these errors are not stripped out for you. """
     document, errors = tidy_document(text, options, keep_doc)

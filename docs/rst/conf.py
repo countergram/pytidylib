@@ -17,7 +17,7 @@ latex_documents = [
     (
     master_doc,
     'pytidylib.tex',
-    'Module Documentation For pytidylib',
+    'PyTidyLib documentation',
     'Jason Stitt',
     'howto',
     False,

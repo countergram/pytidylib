@@ -1,64 +1,57 @@
-pytidylib: A Python interface to TidyLib
-----------------------------------------
+PyTidyLib: A Python Interface to HTML Tidy
+------------------------------------------
 
-The pytidylib_ module is a Python interface to the TidyLib_ library, which allows you to turn semi-valid HTML or XHTML code into valid code with an HTML 4, XHTML Transitional or XHTML Strict doctype. Some of the library's capabilities include:
+`PyTidyLib`_ is a Python package that wraps the `HTML Tidy`_ library. This allows you, from Python code, to "fix" invalid (X)HTML markup. Some of the library's many capabilities include:
 
- - Clean up unclosed tags and unescaped characters such as ampersands
- 
- - Output HTML 4 or XHTML Transitional or Strict
- 
- - Convert named HTML entities to numeric entities, which are more portable and can be used in XML documents without an HTML doctype
- 
- - Clean up output from desktop programs such as Word
- 
- - Indent the output, including proper (i.e. no) indenting for ``pre`` elements
+* Clean up unclosed tags and unescaped characters such as ampersands
+* Output HTML 4 or XHTML, strict or transitional, and add missing doctypes
+* Convert named entities to numeric entities, which can then be used in XML documents without an HTML doctype.
+* Clean up HTML from programs such as Word (to an extent)
+* Indent the output, including proper (i.e. no) indenting for ``pre`` elements, which some (X)HTML indenting code overlooks.
 
-The pytidylib package is intended as a replacement for the uTidyLib package. The author found that uTidyLib has not been maintained in a while, and there are several outstanding patches. Compared to uTidyLib, the pytidylib package:
+PyTidyLib is intended as as replacement for uTidyLib, which fills a similar purpose. The author previously used uTidyLib but found several areas for improvement, including OS X support, 64-bit platform support, unicode support, fixing a memory leak, and better speed.
 
- - Supports unicode strings
- 
- - Supports 64-bit systems and OS X
- 
- - Has improved performance, due to using cStringIO in place of StringIO, having the (optional) ability to re-use document objects, and a few other enhancements
- 
- - Does not leak memory when used repeatedly, due to proper freeing of document and error-reporting objects
- 
-This package relies on ``ctypes``, which was added to Python in version 2.5. For versions 2.3 to 2.4, download ``ctypes`` from the `ctypes home page`_.
-
-.. _pytidylib: http://countergram.com/software/pytidylib
-.. _`ctypes home page`: http://python.net/crew/theller/ctypes/
-.. _TidyLib: http://tidy.sourceforge.net/
-
-Installing TidyLib
+Naming conventions
 ==================
 
-You must have TidyLib_ installed to use this Python module. There is no affiliation between the two projects; this is only a quick reference. How best to install TidyLib_ depends on your platform:
+`HTML Tidy`_ is a longstanding open-source library written in C that implements the actual functionality of cleaning up (X)HTML markup. It provides a shared library (``so``, ``dll``, or ``dylib``) that can variously be called ``tidy``, ``libtidy``, or ``tidylib``, as well as a command-line executable named ``tidy``. For clarity, this document will consistently refer to it by the project name, HTML Tidy.
 
- - Linux/BSD: First, try installing ``tidylib`` (or possibly ``libtidy``) through your system's package management or ports system.
- 
- - OS X: You may already have TidyLib_, especially if you have Apple's Developer Tools installed. In Terminal, run ``locate libtidy`` to find out.
- 
- - Windows: First, try installing the Windows package from the TidyLib_ homepage. As of this writing, the latest DLL version may not be fully up-to-date.
- 
- - If none of the above options works, downlaod the source code and build it yourself using the appropriate compiler for your platform. You must download the source using CVS::
- 
-    cvs -z3 -d:pserver:anonymous@tidy.cvs.sourceforge.net:/cvsroot/tidy co -P tidy
-    
-Installing pytidylib
+`PyTidyLib`_ is the name of the Python package discussed here. As this is the package name, ``easy_install pytidylib`` or ``pip install pytidylib`` is correct (they are case-insenstive). The *module* name is ``tidylib``, so ``import tidylib`` is correct in Python code. This document will consistently use the package name, PyTidyLib, outside of code examples.
+
+Installing HTML Tidy
 ====================
 
-Use `easy_install`_::
+You must have both `HTML Tidy`_ and `PyTidyLib`_ installed in order to use the functionality described here. There is no affiliation between the two projects. The following briefly outlines what you must do to install HTML Tidy. See the `HTML Tidy`_ web site for more information.
 
+**Linux/BSD or similar:** First, try to use your distribution's package management system (``apt-get``, ``yum``, etc.) to install HTML Tidy. It might go under the name ``libtidy``, ``tidylib``, ``tidy``, or something similar. Otherwise see *Building from Source*, below.
+
+**OS X:** You may already have HTML Tidy installed. In the Terminal, run ``locate libtidy`` and see if you get any results, which should end in ``dylib``. Otherwise see *Building from Source*, below.
+
+**Windows:** (Use PyTidyLib version 0.2 or later!) Prebuilt HTML Tidy DLLs are available from at least two locations. The `int64.org Tidy Binaries`_ page provides binaries that were built in 2005, for both 32-bit and 64-bit Windows, against a patched version of the source. The `HTML Tidy`_ web site links to a DLL built in 2006, for 32-bit Windows only, using the vanilla source (scroll near the bottom to "Other Builds" -- use the one that reads "exe/lib/dll", *not* the "exe"-only version.)
+
+Once you have a DLL (which may be named ``tidy.dll``, ``libtidy.dll``, or ``tidylib.dll``), you must place it in a directory on your system path. If you are running Python from the command-line, placing the DLL in the present working directory will work, but this is unreliable otherwise (e.g. for server software).
+
+See the articles `How to set the path in Windows 2000/Windows XP <http://www.computerhope.com/issues/ch000549.htm>`_ (ComputerHope.com) and `Modify a Users Path in Windows Vista <http://www.question-defense.com/2009/06/22/modify-a-users-path-in-windows-vista-vista-path-environment-variable/>`_ (Question Defense) for more information on your system path.
+
+**Building from Source:** The HTML Tidy developers have chosen to make the source code downloadable *only* through CVS, and not from the web site. Use the following CVS checkout at the command line::
+
+    cvs -z3 -d:pserver:anonymous@tidy.cvs.sourceforge.net:/cvsroot/tidy co -P tidy
+    
+Then see the instructions packaged with the source code or on the `HTML Tidy`_ web site.
+
+Installing PyTidyLib
+====================
+
+PyTidyLib is available on the Python Package Index and may be installed in the usual ways if you have `pip`_ or `setuptools`_ installed::
+
+    pip install pytidylib
+    # or:
     easy_install pytidylib
     
-Or, download the latest pytidylib from SourceForge and install in the usual way::
+You can also download the latest source distribution from the `PyTidyLib`_ web site.
 
-    python setup.py install
-    
-.. _`easy_install`: http://peak.telecommunity.com/DevCenter/EasyInstall
-
-Trivial example of use
-======================
+Small example of use
+====================
 
 The following code cleans up an invalid HTML document and sets an option::
 
@@ -67,11 +60,11 @@ The following code cleans up an invalid HTML document and sets an option::
         options={'numeric-entities':1})
     print document
     print errors
-
+    
 Configuration options
 =====================
 
-The Python interface allows you to pass options directly to libtidy. For a complete list of options, see the `HTML Tidy Configuration Options Quick Reference`_ or, from the command line, run ``tidy -help-config``.
+The Python interface allows you to pass options directly to HTML Tidy. For a complete list of options, see the `HTML Tidy Configuration Options Quick Reference`_ or, from the command line, run ``tidy -help-config``.
 
 .. _`HTML Tidy Configuration Options Quick Reference`: http://tidy.sourceforge.net/docs/quickref.html
 
@@ -86,7 +79,7 @@ This module sets certain default options, as follows::
         "doctype": 'strict',   # Little sense in transitional for tool-generated markup...
         "force-output": 1,     # May not get what you expect but you will get something
         }
-    
+
 If you do not like these options to be set for you, do the following after importing ``tidylib``::
 
     tidylib.BASE_OPTIONS = {}
@@ -100,3 +93,8 @@ Function reference
 
 .. autofunction:: tidylib.release_tidy_doc
 
+.. _`HTML Tidy`: http://tidy.sourceforge.net/
+.. _`PyTidyLib`: http://countergram.com/open-source/pytidylib/
+.. _`int64.org Tidy Binaries`: http://int64.org/projects/tidy-binaries
+.. _`setuptools`: http://pypi.python.org/pypi/setuptools
+.. _`pip`: http://pypi.python.org/pypi/pip
