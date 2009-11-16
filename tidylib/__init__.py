@@ -68,7 +68,7 @@ for name in LIB_NAMES:
         pass
         
 if tidy is None:
-    raise OSError("Could not libtidy using any of these names: %s" % (",".join(LIB_NAMES)))
+    raise OSError("Could not load libtidy using any of these names: %s" % (",".join(LIB_NAMES)))
 
 tidy.tidyCreate.restype = ctypes.POINTER(ctypes.c_void_p) # Fix for 64-bit systems
 
@@ -80,7 +80,7 @@ def tidy_document(text, options=None, keep_doc=False):
     
     text (str): The markup, which may be anything from an empty string to a
     complete (X)HTML document. Unicode values are supported; they will be
-    encoded as utf-8, and HTML Tidy's output will be decoded back to a unicode
+    encoded as UTF-8, and HTML Tidy's output will be decoded back to a unicode
     object.
     
     options (dict): Options passed directly to HTML Tidy; see the HTML Tidy docs
@@ -166,9 +166,9 @@ def tidy_fragment(text, options=None, keep_doc=False):
     Calling tidy_fragment on elements that don't go in the <body>, like <title>,
     will produce incorrect behavior.
     
-    Arguments and return value as tidy_document. Note that HTML Tidy will always
-    complain about the lack of a doctype and <title> element in fragments,
-    and these errors are not stripped out for you. """
+    Arguments and return value are the same as tidy_document. Note that HTML
+    Tidy will always complain about the lack of a doctype and <title> element
+    in fragments, and these errors are not stripped out for you. """
     document, errors = tidy_document(text, options, keep_doc)
     match = RE_BODY.search(document)
     if match:
