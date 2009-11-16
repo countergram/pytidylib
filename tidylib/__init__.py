@@ -98,7 +98,7 @@ def tidy_document(text, options=None, keep_doc=False):
     
     # Unicode approach is to encode as string, then decode libtidy output
     use_unicode = False
-    if type(text) == unicode:
+    if isinstance(text, unicode):
         use_unicode = True
         text = text.encode('utf-8')
     
