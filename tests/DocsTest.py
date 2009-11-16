@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 # Copyright 2009 Jason Stitt
 # 
 # Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -36,7 +37,7 @@ DOC = '''<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
 class TestDocs1(unittest.TestCase):
     """ Test some sample documents """
     
-    def test_doc_1(self):
+    def test_doc_with_unclosed_tag(self):
         h = "<p>hello"
         expected = DOC % '''<p>
       hello
@@ -44,13 +45,13 @@ class TestDocs1(unittest.TestCase):
         doc, err = tidy_document(h)
         self.assertEqual(doc, expected)
         
-    def test_doc_2(self):
+    def test_doc_with_incomplete_img_tag(self):
         h = "<img src='foo'>"
         expected = DOC % '''<img src='foo' alt="" />'''
         doc, err = tidy_document(h)
         self.assertEqual(doc, expected)
         
-    def test_doc_3(self):
+    def test_doc_with_entity(self):
         h = "&eacute;"
         expected = DOC % "&eacute;"
         doc, err = tidy_document(h)
@@ -60,6 +61,21 @@ class TestDocs1(unittest.TestCase):
         doc, err = tidy_document(h, {'numeric-entities':1})
         self.assertEqual(doc, expected)
     
+    def test_doc_with_unicode(self):
+        h = u"unicode string ß"
+        expected = unicode(DOC, 'utf-8') % h
+        doc, err = tidy_document(h)
+        self.assertEqual(doc, expected)
+        
+    def test_doc_with_unicode_subclass(self):
+        class MyUnicode(unicode):
+            pass
+        
+        h = MyUnicode(u"unicode string ß")
+        expected = unicode(DOC, 'utf-8') % h
+        doc, err = tidy_document(h)
+        self.assertEqual(doc, expected)
+        
     
 if __name__ == '__main__':
     unittest.main()

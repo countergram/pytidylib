@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 # Copyright 2009 Jason Stitt
 # 
 # Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -21,10 +22,10 @@
 import unittest
 from tidylib import tidy_fragment
 
-class TestDocs1(unittest.TestCase):
-    """ Test some sample documents """
+class TestFrags1(unittest.TestCase):
+    """ Test some sample fragment documents """
     
-    def test_doc_1(self):
+    def test_frag_with_unclosed_tag(self):
         h = "<p>hello"
         expected = '''<p>
       hello
@@ -32,13 +33,13 @@ class TestDocs1(unittest.TestCase):
         doc, err = tidy_fragment(h)
         self.assertEqual(doc, expected)
         
-    def test_doc_2(self):
+    def test_frag_with_incomplete_img_tag(self):
         h = "<img src='foo'>"
         expected = '''<img src='foo' alt="" />'''
         doc, err = tidy_fragment(h)
         self.assertEqual(doc, expected)
         
-    def test_doc_3(self):
+    def test_frag_with_entity(self):
         h = "&eacute;"
         expected = "&eacute;"
         doc, err = tidy_fragment(h)
@@ -48,5 +49,23 @@ class TestDocs1(unittest.TestCase):
         doc, err = tidy_fragment(h, {'numeric-entities':1})
         self.assertEqual(doc, expected)
     
+    def test_frag_with_unicode(self):
+        h = u"unicode string ß"
+        expected = h
+        doc, err = tidy_fragment(h)
+        self.assertEqual(doc, expected)
+
+    def test_frag_with_unicode_subclass(self):
+        class MyUnicode(unicode):
+            pass
+
+        h = MyUnicode(u"unicode string ß")
+        expected = h
+        doc, err = tidy_fragment(h)
+        self.assertEqual(doc, expected)
+    
 if __name__ == '__main__':
     unittest.main()
+
+
+
