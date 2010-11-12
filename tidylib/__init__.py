@@ -22,7 +22,7 @@ import ctypes
 import threading
 import re
 import platform
-from sink import create_sink, destroy_sink
+from tidylib.sink import create_sink, destroy_sink
 
 __all__ = ['tidy_document', 'tidy_fragment', 'release_tidy_doc']
 
@@ -34,7 +34,6 @@ LIB_NAMES = ['libtidy', 'libtidy.so', 'libtidy-0.99.so.0', 'cygtidy-0-99-0',
 ENOMEM = -12
 RE_BODY = re.compile(r"<body>[\r\n]*(.+?)</body>", re.S)
 BASE_OPTIONS = {
-    "output-xhtml": 1,     # XHTML instead of HTML4
     "indent": 1,           # Pretty; not too much of a performance hit
     "tidy-mark": 0,        # No tidy meta tag in output
     "wrap": 0,             # No wrapping
@@ -73,6 +72,24 @@ if tidy is None:
 tidy.tidyCreate.restype = ctypes.POINTER(ctypes.c_void_p) # Fix for 64-bit systems
 
 #----------------------------------------------------------------------------#
+# 3.x/2.x cross-compatibility
+
+try:
+    unicode # 2.x
+    def is_unicode(obj):
+        return isinstance(obj, unicode)
+        
+    def encode_key_value(k, v):
+        return unicode(k).encode('utf-8'), unicode(v).encode('utf-8')
+except NameError:
+    # 3.x
+    def is_unicode(obj):
+        return isinstance(obj, str)
+
+    def encode_key_value(k, v):
+        return str(k).encode('utf-8'), str(v).encode('utf-8')
+
+#----------------------------------------------------------------------------#
 # Functions
 
 def tidy_document(text, options=None, keep_doc=False):
@@ -98,7 +115,7 @@ def tidy_document(text, options=None, keep_doc=False):
     
     # Unicode approach is to encode as string, then decode libtidy output
     use_unicode = False
-    if isinstance(text, unicode):
+    if is_unicode(text):
         use_unicode = True
         text = text.encode('utf-8')
     
@@ -129,7 +146,8 @@ def tidy_document(text, options=None, keep_doc=False):
             key = key.replace('_', '-')
             if value is None:
                 value = ''
-            tidy.tidyOptParseValue(doc, key, str(value))
+            key, value = encode_key_value(key, value)
+            tidy.tidyOptParseValue(doc, key, value)
             error = str(sink)
             if error:
                 raise ValueError("(tidylib) " + error)

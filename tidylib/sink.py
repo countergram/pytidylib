@@ -26,7 +26,10 @@ import platform
 try:
     from cStringIO import StringIO
 except ImportError:
-    from StringIO import StringIO 
+    try:
+        from StringIO import StringIO 
+    except ImportError:
+        from io import StringIO
 
 __all__ = ['Sink', 'create_sink', 'destroy_sink']
 
@@ -70,7 +73,7 @@ class Sink(object):
         def put_byte(sink_id, byte):
             # We don't need sink_id because we have a separate put_byte
             # function for each sink
-            write_func(byte)
+            write_func(byte.decode('utf-8'))
         self.struct.putByte = PutByteType(put_byte)
         self._as_parameter_ = ctypes.byref(self.struct)
     
@@ -83,7 +86,7 @@ def create_sink():
     sink_id_lock.acquire()
     try:
         this_sink_id = last_sink_id
-        last_sink_id = (last_sink_id + 1) % sys.maxint
+        last_sink_id = (last_sink_id + 1) % sys.maxsize
         # If you have more than maxint sinks open at a time, you're screwed
     finally:
         sink_id_lock.release()
