@@ -32,7 +32,6 @@ __all__ = ['tidy_document', 'tidy_fragment', 'release_tidy_doc']
 LIB_NAMES = ['libtidy', 'libtidy.so', 'libtidy-0.99.so.0', 'cygtidy-0-99-0',
              'tidylib', 'libtidy.dylib', 'tidy']
 ENOMEM = -12
-RE_BODY = re.compile(r"<body>[\r\n]*(.+?)</body>", re.S)
 BASE_OPTIONS = {
     "indent": 1,           # Pretty; not too much of a performance hit
     "tidy-mark": 0,        # No tidy meta tag in output
@@ -187,13 +186,11 @@ def tidy_fragment(text, options=None, keep_doc=False):
     Arguments and return value are the same as tidy_document. Note that HTML
     Tidy will always complain about the lack of a doctype and <title> element
     in fragments, and these errors are not stripped out for you. """
+    options = dict(options) if options else dict()
+    options["show-body-only"] = 1
     document, errors = tidy_document(text, options, keep_doc)
-    match = RE_BODY.search(document)
-    if match:
-        document = match.group(1).strip()
-        return (document, errors)
-    else:
-        raise ValueError("tidy_fragment failed to process text")
+    document = document.strip()
+    return document, errors
     
 def release_tidy_doc():
     """ Release the stored document object in the current thread. Only useful

@@ -27,9 +27,7 @@ class TestFrags1(unittest.TestCase):
     
     def test_frag_with_unclosed_tag(self):
         h = "<p>hello"
-        expected = '''<p>
-      hello
-    </p>'''
+        expected = '''<p>\n  hello\n</p>'''
         doc, err = tidy_fragment(h)
         self.assertEqual(doc, expected)
         
