@@ -35,7 +35,7 @@ class TestFrags1(unittest.TestCase):
         
     def test_frag_with_incomplete_img_tag(self):
         h = "<img src='foo'>"
-        expected = '''<img src='foo' alt="" />'''
+        expected = '''<img src='foo' alt="">'''
         doc, err = tidy_fragment(h)
         self.assertEqual(doc, expected)
         
