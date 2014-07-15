@@ -7,3 +7,4 @@ docs/html/.doctrees
 build
 dist
 docs/html/.buildinfo
+.tox
