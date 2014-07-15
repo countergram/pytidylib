@@ -67,7 +67,6 @@ setup(
     author="Jason Stitt",
     author_email="js@jasonstitt.com",
     url="http://countergram.com/open-source/pytidylib/",
-    download_url="http://cloud.github.com/downloads/countergram/pytidylib/pytidylib-%s.tar.gz" % VERSION,
     packages=['tidylib'],
     classifiers=[
           'Development Status :: 4 - Beta',
