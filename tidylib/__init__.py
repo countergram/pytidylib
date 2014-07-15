@@ -1,15 +1,15 @@
-# Copyright 2009 Jason Stitt
-# 
+# Copyright 2009-2014 Jason Stitt
+#
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
 # in the Software without restriction, including without limitation the rights
 # to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
 # copies of the Software, and to permit persons to whom the Software is
 # furnished to do so, subject to the following conditions:
-# 
+#
 # The above copyright notice and this permission notice shall be included in
 # all copies or substantial portions of the Software.
-# 
+#
 # THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
 # IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
 # FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -20,13 +20,12 @@
 
 import ctypes
 import threading
-import re
 import platform
 from tidylib.sink import create_sink, destroy_sink
 
 __all__ = ['tidy_document', 'tidy_fragment', 'release_tidy_doc']
 
-#----------------------------------------------------------------------------#
+# -------------------------------------------------------------------------- #
 # Constants
 
 LIB_NAMES = ['libtidy', 'libtidy.so', 'libtidy-0.99.so.0', 'cygtidy-0-99-0',
@@ -39,14 +38,14 @@ BASE_OPTIONS = {
     "alt-text": "",        # Help ensure validation
     "doctype": 'strict',   # Little sense in transitional for tool-generated markup...
     "force-output": 1,     # May not get what you expect but you will get something
-    }
+}
     
 # Note: These are meant as sensible defaults. If you don't like these being
 # applied by default, just set tidylib.BASE_OPTIONS = {} after importing.
 # You can of course override any of these options when you call the
 # tidy_document() or tidy_fragment() function
 
-#----------------------------------------------------------------------------#
+# -------------------------------------------------------------------------- #
 # Globals
 
 tidy = None
@@ -68,13 +67,14 @@ for name in LIB_NAMES:
 if tidy is None:
     raise OSError("Could not load libtidy using any of these names: %s" % (",".join(LIB_NAMES)))
 
-tidy.tidyCreate.restype = ctypes.POINTER(ctypes.c_void_p) # Fix for 64-bit systems
+tidy.tidyCreate.restype = ctypes.POINTER(ctypes.c_void_p)  # Fix for 64-bit systems
 
-#----------------------------------------------------------------------------#
+# -------------------------------------------------------------------------- #
 # 3.x/2.x cross-compatibility
 
 try:
-    unicode # 2.x
+    unicode  # 2.x
+
     def is_unicode(obj):
         return isinstance(obj, unicode)
         
@@ -88,8 +88,9 @@ except NameError:
     def encode_key_value(k, v):
         return str(k).encode('utf-8'), str(v).encode('utf-8')
 
-#----------------------------------------------------------------------------#
+# -------------------------------------------------------------------------- #
 # Functions
+
 
 def tidy_document(text, options=None, keep_doc=False):
     """ Run a string with markup through HTML Tidy; return the corrected one.
@@ -101,7 +102,7 @@ def tidy_document(text, options=None, keep_doc=False):
     
     options (dict): Options passed directly to HTML Tidy; see the HTML Tidy docs
     (http://tidy.sourceforge.net/docs/quickref.html) or run tidy -help-config
-    from the command line.    
+    from the command line.
     
     keep_doc (boolean): If True, store 1 document object per thread and re-use
     it, for a slight performance boost especially when tidying very large numbers
@@ -192,12 +193,10 @@ def tidy_fragment(text, options=None, keep_doc=False):
     document = document.strip()
     return document, errors
     
+
 def release_tidy_doc():
     """ Release the stored document object in the current thread. Only useful
     if you have called tidy_document or tidy_fragament with keep_doc=True. """
     if hasattr(thread_local_doc, 'doc'):
         tidy.tidyRelease(thread_local_doc.doc)
         del thread_local_doc.doc
-    
-#----------------------------------------------------------------------------#
-    
