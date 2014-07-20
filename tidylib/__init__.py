@@ -95,10 +95,12 @@ except NameError:
 def tidy_document(text, options=None, keep_doc=False):
     """ Run a string with markup through HTML Tidy; return the corrected one.
 
-    text (str): The markup, which may be anything from an empty string to a
-    complete (X)HTML document. Unicode values are supported; they will be
-    encoded as UTF-8, and HTML Tidy's output will be decoded back to a unicode
-    object.
+    text: The markup, which may be anything from an empty string to a complete
+    (X)HTML document. If you pass in a unicode type (py3 str, py2 unicode) you
+    get one back out, and tidy will have some options set that may affect
+    behavior (e.g. named entities converted to plain unicode characters). If
+    you pass in a bytes type (py3 bytes, py2 str) you will get one of those
+    back.
 
     options (dict): Options passed directly to HTML Tidy; see the HTML Tidy docs
     (http://tidy.sourceforge.net/docs/quickref.html) or run tidy -help-config
@@ -108,7 +110,7 @@ def tidy_document(text, options=None, keep_doc=False):
     it, for a slight performance boost especially when tidying very large numbers
     of very short documents.
 
-    returns (str, str): The tidied markup [0] and warning/error messages[1].
+    returns (str, str): The tidied markup and unparsed warning/error messages.
     Warnings and errors are returned just as tidylib returns them.
     """
     global tidy, option_names
