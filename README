@@ -8,3 +8,7 @@ document, errors = tidy_document('''<p>f&otilde;o <img src="bar.jpg">''',
     options={'numeric-entities':1})
 print document
 print errors
+
+NOTE: HTML Tidy itself has currently not been updated for a long time, and may
+not be, and it may have trouble with newer HTML. This is just a thin Python
+wrapper around HTML Tidy, which is a separate project.
