@@ -71,7 +71,6 @@ The Python interface allows you to pass options directly to HTML Tidy. For a com
 This module sets certain default options, as follows::
 
     BASE_OPTIONS = {
-        "output-xhtml": 1,     # XHTML instead of HTML4
         "indent": 1,           # Pretty; not too much of a performance hit
         "tidy-mark": 0,        # No tidy meta tag in output
         "wrap": 0,             # No wrapping
