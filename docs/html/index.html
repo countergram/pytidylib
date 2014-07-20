@@ -52,7 +52,7 @@
 <li>Indent the output, including proper (i.e. no) indenting for <tt class="docutils literal"><span class="pre">pre</span></tt> elements, which some (X)HTML indenting code overlooks.</li>
 </ul>
 <p>As of the latest PyTidyLib maintenance updates, HTML Tidy itself has currently not been updated since 2008, and it may have trouble with newer HTML. This is just a thin Python wrapper around HTML Tidy, which is a separate project.</p>
-<p>As of 0.2.4, both Python 2 and Python 3 are supported with passing tests.</p>
+<p>As of 0.2.3, both Python 2 and Python 3 are supported with passing tests.</p>
 <div class="section" id="naming-conventions">
 <h2>Naming conventions<a class="headerlink" href="#naming-conventions" title="Permalink to this headline">¶</a></h2>
 <p><a class="reference external" href="http://tidy.sourceforge.net/">HTML Tidy</a> is a longstanding open-source library written in C that implements the actual functionality of cleaning up (X)HTML markup. It provides a shared library (<tt class="docutils literal"><span class="pre">so</span></tt>, <tt class="docutils literal"><span class="pre">dll</span></tt>, or <tt class="docutils literal"><span class="pre">dylib</span></tt>) that can variously be called <tt class="docutils literal"><span class="pre">tidy</span></tt>, <tt class="docutils literal"><span class="pre">libtidy</span></tt>, or <tt class="docutils literal"><span class="pre">tidylib</span></tt>, as well as a command-line executable named <tt class="docutils literal"><span class="pre">tidy</span></tt>. For clarity, this document will consistently refer to it by the project name, HTML Tidy.</p>

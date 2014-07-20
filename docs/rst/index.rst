@@ -11,7 +11,7 @@ PyTidyLib: A Python Interface to HTML Tidy
 
 As of the latest PyTidyLib maintenance updates, HTML Tidy itself has currently not been updated since 2008, and it may have trouble with newer HTML. This is just a thin Python wrapper around HTML Tidy, which is a separate project.
 
-As of 0.2.4, both Python 2 and Python 3 are supported with passing tests.
+As of 0.2.3, both Python 2 and Python 3 are supported with passing tests.
 
 Naming conventions
 ==================
