@@ -66,7 +66,7 @@ VERSION = "0.2.3"
 setup(
     name="pytidylib",
     version=VERSION,
-    description="Python wrapper for HTML Tidy (tidylib)",
+    description="Python wrapper for HTML Tidy (tidylib) on Python 2 and 3",
     long_description=longdesc,
     author="Jason Stitt",
     author_email="js@jasonstitt.com",
