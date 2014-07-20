@@ -39,7 +39,7 @@ BASE_OPTIONS = {
     "doctype": 'strict',   # Little sense in transitional for tool-generated markup...
     "force-output": 1,     # May not get what you expect but you will get something
 }
-    
+
 # Note: These are meant as sensible defaults. If you don't like these being
 # applied by default, just set tidylib.BASE_OPTIONS = {} after importing.
 # You can of course override any of these options when you call the
@@ -63,7 +63,7 @@ for name in LIB_NAMES:
         break
     except OSError:
         pass
-        
+
 if tidy is None:
     raise OSError("Could not load libtidy using any of these names: %s" % (",".join(LIB_NAMES)))
 
@@ -77,7 +77,7 @@ try:
 
     def is_unicode(obj):
         return isinstance(obj, unicode)
-        
+
     def encode_key_value(k, v):
         return unicode(k).encode('utf-8'), unicode(v).encode('utf-8')
 except NameError:
@@ -94,31 +94,31 @@ except NameError:
 
 def tidy_document(text, options=None, keep_doc=False):
     """ Run a string with markup through HTML Tidy; return the corrected one.
-    
+
     text (str): The markup, which may be anything from an empty string to a
     complete (X)HTML document. Unicode values are supported; they will be
     encoded as UTF-8, and HTML Tidy's output will be decoded back to a unicode
     object.
-    
+
     options (dict): Options passed directly to HTML Tidy; see the HTML Tidy docs
     (http://tidy.sourceforge.net/docs/quickref.html) or run tidy -help-config
     from the command line.
-    
+
     keep_doc (boolean): If True, store 1 document object per thread and re-use
     it, for a slight performance boost especially when tidying very large numbers
     of very short documents.
-    
+
     returns (str, str): The tidied markup [0] and warning/error messages[1].
     Warnings and errors are returned just as tidylib returns them.
     """
     global tidy, option_names
-    
+
     # Unicode approach is to encode as string, then decode libtidy output
     use_unicode = False
     if is_unicode(text):
         use_unicode = True
         text = text.encode('utf-8')
-    
+
     # Manage thread-local storage of persistent document object
     if keep_doc:
         if not hasattr(thread_local_doc, 'doc'):
@@ -126,11 +126,11 @@ def tidy_document(text, options=None, keep_doc=False):
         doc = thread_local_doc.doc
     else:
         doc = tidy.tidyCreate()
-    
+
     # This is where error messages are sent by libtidy
     sink = create_sink()
     tidy.tidySetErrorSink(doc, sink)
-    
+
     try:
         # Set options on the document
         # If keep_doc=True, options will persist between calls, but they can
@@ -151,11 +151,11 @@ def tidy_document(text, options=None, keep_doc=False):
             error = str(sink)
             if error:
                 raise ValueError("(tidylib) " + error)
-    
+
         # The point of the whole thing
         tidy.tidyParseString(doc, text)
         tidy.tidyCleanAndRepair(doc)
-        
+
         # Guess at buffer size; tidy returns ENOMEM if the buffer is too
         # small and puts the required size into out_length
         out_length = ctypes.c_int(8192)
@@ -163,7 +163,7 @@ def tidy_document(text, options=None, keep_doc=False):
         if ENOMEM == tidy.tidySaveString(doc, out, ctypes.byref(out_length)):
             out = ctypes.c_buffer(out_length.value)
             tidy.tidySaveString(doc, out, ctypes.byref(out_length))
-            
+
         document = out.value
         if use_unicode:
             document = document.decode('utf-8')
@@ -174,16 +174,16 @@ def tidy_document(text, options=None, keep_doc=False):
             tidy.tidyRelease(doc)
 
     return (document, errors)
-    
-    
+
+
 def tidy_fragment(text, options=None, keep_doc=False):
     """ Tidy a string with markup and return only the <body> contents.
-    
+
     HTML Tidy normally returns a full (X)HTML document; this function returns only
     the contents of the <body> element and is meant to be used for snippets.
     Calling tidy_fragment on elements that don't go in the <body>, like <title>,
     will produce incorrect behavior.
-    
+
     Arguments and return value are the same as tidy_document. Note that HTML
     Tidy will always complain about the lack of a doctype and <title> element
     in fragments, and these errors are not stripped out for you. """
@@ -192,7 +192,7 @@ def tidy_fragment(text, options=None, keep_doc=False):
     document, errors = tidy_document(text, options, keep_doc)
     document = document.strip()
     return document, errors
-    
+
 
 def release_tidy_doc():
     """ Release the stored document object in the current thread. Only useful

@@ -58,7 +58,7 @@ class TidyOutputSink(ctypes.Structure):
         ('sinkData', ctypes.c_void_p),
         ('putByte', PutByteType)
     ]
-        
+
 # -------------------------------------------------------------------------- #
 # Python interface
 
@@ -77,10 +77,10 @@ class Sink(object):
             # We don't need sink_id because we have a separate put_byte
             # function for each sink
             write_func(byte.decode('utf-8'))
-            
+
         self.struct.putByte = PutByteType(put_byte)
         self._as_parameter_ = ctypes.byref(self.struct)
-    
+
     def __str__(self):
         return self.data.getvalue()
 
