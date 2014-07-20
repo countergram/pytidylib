@@ -9,14 +9,16 @@ PyTidyLib: A Python Interface to HTML Tidy
 * Clean up HTML from programs such as Word (to an extent)
 * Indent the output, including proper (i.e. no) indenting for ``pre`` elements, which some (X)HTML indenting code overlooks.
 
-PyTidyLib is intended as as replacement for uTidyLib, which fills a similar purpose. The author previously used uTidyLib but found several areas for improvement, including OS X support, 64-bit platform support, unicode support, fixing a memory leak, and better speed.
+As of the latest PyTidyLib maintenance updates, HTML Tidy itself has currently not been updated since 2008, and it may have trouble with newer HTML. This is just a thin Python wrapper around HTML Tidy, which is a separate project.
+
+As of 0.2.4, both Python 2 and Python 3 are supported with passing tests.
 
 Naming conventions
 ==================
 
 `HTML Tidy`_ is a longstanding open-source library written in C that implements the actual functionality of cleaning up (X)HTML markup. It provides a shared library (``so``, ``dll``, or ``dylib``) that can variously be called ``tidy``, ``libtidy``, or ``tidylib``, as well as a command-line executable named ``tidy``. For clarity, this document will consistently refer to it by the project name, HTML Tidy.
 
-`PyTidyLib`_ is the name of the Python package discussed here. As this is the package name, ``easy_install pytidylib`` or ``pip install pytidylib`` is correct (they are case-insenstive). The *module* name is ``tidylib``, so ``import tidylib`` is correct in Python code. This document will consistently use the package name, PyTidyLib, outside of code examples.
+`PyTidyLib`_ is the name of the Python package discussed here. As this is the package name, ``pip install pytidylib`` is correct (they are case-insenstive). The *module* name is ``tidylib``, so ``import tidylib`` is correct in Python code. This document will consistently use the package name, PyTidyLib, outside of code examples.
 
 Installing HTML Tidy
 ====================
@@ -27,7 +29,7 @@ You must have both `HTML Tidy`_ and `PyTidyLib`_ installed in order to use the f
 
 **OS X:** You may already have HTML Tidy installed. In the Terminal, run ``locate libtidy`` and see if you get any results, which should end in ``dylib``. Otherwise see *Building from Source*, below.
 
-**Windows:** (Use PyTidyLib version 0.2 or later!) Prebuilt HTML Tidy DLLs are available from at least two locations. The `int64.org Tidy Binaries`_ page provides binaries that were built in 2005, for both 32-bit and 64-bit Windows, against a patched version of the source. The `HTML Tidy`_ web site links to a DLL built in 2006, for 32-bit Windows only, using the vanilla source (scroll near the bottom to "Other Builds" -- use the one that reads "exe/lib/dll", *not* the "exe"-only version.)
+**Windows:** (Do not use pre-0.2.0 PyTidyLib.) You may be able to find prebuild DLLs. The DLL sources that were linked to in previous versions of this documentation have since gone 404 without obvious  replacements.
 
 Once you have a DLL (which may be named ``tidy.dll``, ``libtidy.dll``, or ``tidylib.dll``), you must place it in a directory on your system path. If you are running Python from the command-line, placing the DLL in the present working directory will work, but this is unreliable otherwise (e.g. for server software).
 
@@ -36,19 +38,17 @@ See the articles `How to set the path in Windows 2000/Windows XP <http://www.com
 **Building from Source:** The HTML Tidy developers have chosen to make the source code downloadable *only* through CVS, and not from the web site. Use the following CVS checkout at the command line::
 
     cvs -z3 -d:pserver:anonymous@tidy.cvs.sourceforge.net:/cvsroot/tidy co -P tidy
-    
+
 Then see the instructions packaged with the source code or on the `HTML Tidy`_ web site.
 
 Installing PyTidyLib
 ====================
 
-PyTidyLib is available on the Python Package Index and may be installed in the usual ways if you have `pip`_ or `setuptools`_ installed::
+PyTidyLib is available on the Python Package Index::
 
     pip install pytidylib
-    # or:
-    easy_install pytidylib
-    
-You can also download the latest source distribution from the `PyTidyLib`_ web site.
+
+You can also download the latest source distribution from PyPI manually.
 
 Small example of use
 ====================
@@ -60,7 +60,7 @@ The following code cleans up an invalid HTML document and sets an option::
         options={'numeric-entities':1})
     print document
     print errors
-    
+
 Configuration options
 =====================
 
@@ -95,6 +95,4 @@ Function reference
 
 .. _`HTML Tidy`: http://tidy.sourceforge.net/
 .. _`PyTidyLib`: http://countergram.com/open-source/pytidylib/
-.. _`int64.org Tidy Binaries`: http://int64.org/projects/tidy-binaries
-.. _`setuptools`: http://pypi.python.org/pypi/setuptools
-.. _`pip`: http://pypi.python.org/pypi/pip
+
