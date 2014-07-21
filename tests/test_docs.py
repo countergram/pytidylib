@@ -22,7 +22,7 @@
 from __future__ import unicode_literals
 
 import unittest
-from tidylib import tidy_document
+from tidylib import tidy_document, release_tidy_doc, thread_local_doc
 
 DOC = u'''<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN">
 <html>
@@ -68,6 +68,22 @@ class TestDocs1(unittest.TestCase):
         expected = DOC % h
         doc, err = tidy_document(h)
         self.assertEqual(doc, expected)
+
+    def test_large_document(self):
+        h = u"A" * 10000
+        expected = DOC % h
+        doc, err = tidy_document(h)
+        self.assertEqual(doc, expected)
+
+    def test_keep_document(self):
+        h = "hello"
+        expected = DOC % h
+        for i in range(4):
+            doc, err = tidy_document(h, keep_doc=True)
+            self.assertEqual(doc, expected)
+        assert hasattr(thread_local_doc, 'doc')
+        release_tidy_doc()
+        assert not hasattr(thread_local_doc, 'doc')
 
 
 if __name__ == '__main__':
