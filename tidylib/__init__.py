@@ -162,9 +162,8 @@ def tidy_document(text, options=None, keep_doc=False):
         # small and puts the required size into out_length
         out_length = ctypes.c_int(8192)
         out = ctypes.c_buffer(out_length.value)
-        if ENOMEM == tidy.tidySaveString(doc, out, ctypes.byref(out_length)):
+        while ENOMEM == tidy.tidySaveString(doc, out, ctypes.byref(out_length)):
             out = ctypes.c_buffer(out_length.value)
-            tidy.tidySaveString(doc, out, ctypes.byref(out_length))
 
         document = out.value
         if use_unicode:
