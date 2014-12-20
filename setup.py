@@ -61,7 +61,7 @@ the `PyTidyLib`_ web page.
 .. _`PyTidyLib`: http://countergram.com/open-source/pytidylib/
 """
 
-VERSION = "0.2.3"
+VERSION = "0.2.4"
 
 setup(
     name="pytidylib",
