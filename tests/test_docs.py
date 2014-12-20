@@ -37,6 +37,7 @@ DOC = u'''<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN">
 
 
 class TestDocs1(unittest.TestCase):
+
     """ Test some sample documents """
 
     def test_p_element_closed(self):
@@ -74,6 +75,14 @@ class TestDocs1(unittest.TestCase):
         expected = DOC % h
         doc, err = tidy_document(h)
         self.assertEqual(doc, expected)
+
+    def test_xmlns_large_document_xml_corner_case(self):
+        # Test for a super weird edge case in Tidy that can cause it to return
+        # the wrong required buffer size.
+        body = '<span><span>A</span></span>' + 'A' * 7937
+        html = '<html xmlns="http://www.w3.org/1999/xhtml">' + body
+        doc, err = tidy_document(html, {'output-xml': 1})
+        self.assertEqual(doc.strip()[-7:], "</html>")
 
     def test_keep_document(self):
         h = "hello"
