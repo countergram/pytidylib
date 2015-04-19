@@ -22,7 +22,7 @@
 from __future__ import unicode_literals
 
 import unittest
-from tidylib import tidy_document, release_tidy_doc, thread_local_doc
+from tidylib import Tidy, PersistentTidy, tidy_document
 
 DOC = u'''<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN">
 <html>
@@ -76,6 +76,28 @@ class TestDocs1(unittest.TestCase):
         doc, err = tidy_document(h)
         self.assertEqual(doc, expected)
 
+    def test_can_use_two_tidy_instances(self):
+        t1 = Tidy()
+        t2 = Tidy()
+        self.assertEqual(t1.tidy_document(DOC % 'a')[0], DOC % 'a')
+        self.assertEqual(t2.tidy_document(DOC % 'b')[0], DOC % 'b')
+
+    def test_tidy_doesnt_persist_options(self):
+        tidy = Tidy()
+        # This option makes it a fragment
+        doc, err = tidy.tidy_document(DOC % 'a', {'show-body-only': 1})
+        self.assertEqual(doc, 'a\n')
+        doc, err = tidy.tidy_document(DOC % 'a')
+        self.assertEqual(doc, DOC % 'a')
+
+    def test_persistent_tidy_does_persist_options(self):
+        tidy = PersistentTidy()
+        # This option makes it a fragment
+        doc, err = tidy.tidy_document(DOC % 'a', {'show-body-only': 1})
+        self.assertEqual(doc, 'a\n')
+        doc, err = tidy.tidy_document(DOC % 'a')
+        self.assertEqual(doc, 'a\n')
+
     def test_xmlns_large_document_xml_corner_case(self):
         # Test for a super weird edge case in Tidy that can cause it to return
         # the wrong required buffer size.
@@ -83,16 +105,6 @@ class TestDocs1(unittest.TestCase):
         html = '<html xmlns="http://www.w3.org/1999/xhtml">' + body
         doc, err = tidy_document(html, {'output-xml': 1})
         self.assertEqual(doc.strip()[-7:], "</html>")
-
-    def test_keep_document(self):
-        h = "hello"
-        expected = DOC % h
-        for i in range(4):
-            doc, err = tidy_document(h, keep_doc=True)
-            self.assertEqual(doc, expected)
-        assert hasattr(thread_local_doc, 'doc')
-        release_tidy_doc()
-        assert not hasattr(thread_local_doc, 'doc')
 
 
 if __name__ == '__main__':

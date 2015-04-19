@@ -1,14 +1,10 @@
-For documentation, see docs/html/index.html in this distribution, or
-http://countergram.com/open-source/pytidylib/
+This is a Python wrapper around the HTML Tidy library. Quick start example:
 
-Small example of use:
+from tidylib import Tidy
+tidy = Tidy()
+document, errors = tidy.tidy_document('<p>f&otilde;o <img src="bar.jpg">',
+    options={'alt-text': 'baz'})
+print(document)
+print(errors)
 
-from tidylib import tidy_document
-document, errors = tidy_document('''<p>f&otilde;o <img src="bar.jpg">''',
-    options={'numeric-entities':1})
-print document
-print errors
-
-NOTE: HTML Tidy itself has currently not been updated for a long time, and may
-not be, and it may have trouble with newer HTML. This is just a thin Python
-wrapper around HTML Tidy, which is a separate project.
+For full documentation, see the docs/ directory.

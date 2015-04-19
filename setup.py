@@ -33,12 +33,18 @@ library's many capabilities include:
 * Indent the output, including proper (i.e. no) indenting for ``pre`` elements,
   which some (X)HTML indenting code overlooks.
 
-Version usage
-=============
+Changes
+=======
 
-* Windows: 0.2.0 and later
-* Python 3: Tests pass on 0.2.3
-* tidylib itself is not actively updated and may have problems with newer HTML
+* 0.3.0: Refactored to use Tidy and PersistentTidy classes while keeping the
+functional interface (which will lazily create a global Tidy() object) for
+backward compatibility. You can now pass a list of library names and base
+options when instantiating Tidy. The keep_doc argument is now deprecated
+and does nothing; use PersistentTidy.
+
+* 0.2.4: Bugfix for a strange memory allocation corner case in Tidy.
+
+* 0.2.3: Python 3 support (2 + 3 cross compatible) with passing Tox tests.
 
 Small example of use
 ====================
@@ -61,7 +67,7 @@ the `PyTidyLib`_ web page.
 .. _`PyTidyLib`: http://countergram.com/open-source/pytidylib/
 """
 
-VERSION = "0.2.4"
+VERSION = "0.3.0"
 
 setup(
     name="pytidylib",
