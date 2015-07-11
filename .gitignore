@@ -9,3 +9,4 @@ dist
 docs/html/.buildinfo
 .tox
 .coverage
+tidy5

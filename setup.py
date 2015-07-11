@@ -1,4 +1,4 @@
-# Copyright 2009 Jason Stitt
+# Copyright 2009-2015 Jason Stitt
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -79,16 +79,15 @@ setup(
     url="http://countergram.com/open-source/pytidylib/",
     packages=['tidylib'],
     classifiers=[
-          'Development Status :: 5 - Production/Stable',
-          'Environment :: Other Environment',
-          'Intended Audience :: Developers',
-          'License :: OSI Approved :: MIT License',
-          'Programming Language :: Python',
-          'Programming Language :: Python :: 3',
-          'Natural Language :: English',
-          'Topic :: Utilities',
-          'Topic :: Text Processing :: Markup :: HTML',
-          'Topic :: Text Processing :: Markup :: XML',
-          ],
-    )
-
+        'Development Status :: 5 - Production/Stable',
+        'Environment :: Other Environment',
+        'Intended Audience :: Developers',
+        'License :: OSI Approved :: MIT License',
+        'Programming Language :: Python',
+        'Programming Language :: Python :: 3',
+        'Natural Language :: English',
+        'Topic :: Utilities',
+        'Topic :: Text Processing :: Markup :: HTML',
+        'Topic :: Text Processing :: Markup :: XML',
+    ],
+)
