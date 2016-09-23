@@ -48,20 +48,20 @@ class TestDocs1(unittest.TestCase):
 
     def test_alt_added_to_img(self):
         h = "<img src='foo'>"
-        expected = DOC % '''<img src='foo' alt="">'''
-        doc, err = tidy_document(h)
+        expected = DOC % '''<img src='foo' alt="bar">'''
+        doc, err = tidy_document(h, {'alt-text': 'bar'})
         self.assertEqual(doc, expected)
 
     def test_entity_preserved_using_bytes(self):
         h = b"&eacute;"
         expected = (DOC % "&eacute;").encode('utf-8')
-        doc, err = tidy_document(h)
+        doc, err = tidy_document(h, {'preserve-entities': 1})
         self.assertEqual(doc, expected)
 
     def test_numeric_entities_using_bytes(self):
         h = b"&eacute;"
         expected = (DOC % "&#233;").encode('utf-8')
-        doc, err = tidy_document(h, {'numeric-entities': 1})
+        doc, err = tidy_document(h, {'numeric-entities': 1, 'output-encoding': 'ascii'})
         self.assertEqual(doc, expected)
 
     def test_non_ascii_preserved(self):
