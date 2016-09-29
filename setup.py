@@ -36,6 +36,8 @@ library's many capabilities include:
 Changes
 =======
 
+* 0.3.1: find_library support while still allowing a list of library names
+
 * 0.3.0: Refactored to use Tidy and PersistentTidy classes while keeping the
 functional interface (which will lazily create a global Tidy() object) for
 backward compatibility. You can now pass a list of library names and base
@@ -67,7 +69,7 @@ the `PyTidyLib`_ web page.
 .. _`PyTidyLib`: http://countergram.com/open-source/pytidylib/
 """
 
-VERSION = "0.3.0"
+VERSION = "0.3.1"
 
 setup(
     name="pytidylib",
