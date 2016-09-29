@@ -19,6 +19,7 @@
 # THE SOFTWARE.
 
 import ctypes
+import ctypes.util
 import threading
 import platform
 import warnings
@@ -80,8 +81,11 @@ class Tidy(object):
     """ Wrapper around the HTML Tidy library for cleaning up possibly invalid
     HTML and XHTML. """
 
-    def __init__(self, lib_names=LIB_NAMES):
-        lib_names = lib_names if isinstance(lib_names, list) else [lib_names]
+    def __init__(self, lib_names=None):
+        if lib_names is None:
+            lib_names = ctypes.util.find_library('tidy') or LIB_NAMES
+        if isinstance(lib_names, str):
+            lib_names = [lib_names]
         for name in lib_names:
             try:
                 self._tidy = load_library(name)
@@ -194,7 +198,7 @@ class PersistentTidy(Tidy):
     automatically set. Thread-local storage is used for the document object
     (one document per thread). """
 
-    def __init__(self, lib_names=LIB_NAMES):
+    def __init__(self, lib_names=None):
         Tidy.__init__(self, lib_names)
         self._local = threading.local()
         self._local.doc = self._tidy.tidyCreate()
