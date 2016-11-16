@@ -36,6 +36,8 @@ library's many capabilities include:
 Changes
 =======
 
+* 0.3.2: Initialization bug fix
+
 * 0.3.1: find_library support while still allowing a list of library names
 
 * 0.3.0: Refactored to use Tidy and PersistentTidy classes while keeping the
