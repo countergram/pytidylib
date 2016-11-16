@@ -81,10 +81,8 @@ class Tidy(object):
     """ Wrapper around the HTML Tidy library for cleaning up possibly invalid
     HTML and XHTML. """
 
-    # Initialize the class variable.
-    _tidy = None
-
     def __init__(self, lib_names=None):
+        self._tidy = None
         if lib_names is None:
             lib_names = ctypes.util.find_library('tidy') or LIB_NAMES
         if isinstance(lib_names, str):
