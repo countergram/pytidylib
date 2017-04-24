@@ -1,12 +1,15 @@
-include README
+include README.md
 include LICENSE
 include MANIFEST.in
+include tox.ini
 include tidylib/*.py
 include tests/*.py
+include profile/*.py
 include *.py
 include docs/pytidylib.pdf
 include docs/html/*.html
 include docs/html/*.js
+include docs/html/objects.inv
 include docs/html/_static/*.*
 include docs/html/_sources/*.*
 include docs/rst/*.*

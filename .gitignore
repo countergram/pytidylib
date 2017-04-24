@@ -10,3 +10,4 @@ docs/html/.buildinfo
 .tox
 .coverage
 tidy5
+pytidylib.egg-info

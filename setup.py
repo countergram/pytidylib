@@ -18,7 +18,7 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 # THE SOFTWARE.
 
-from distutils.core import setup
+from setuptools import setup
 
 longdesc = """\
 `PyTidyLib`_ is a Python package that wraps the `HTML Tidy`_ library. This
@@ -41,10 +41,10 @@ Changes
 * 0.3.1: find_library support while still allowing a list of library names
 
 * 0.3.0: Refactored to use Tidy and PersistentTidy classes while keeping the
-functional interface (which will lazily create a global Tidy() object) for
-backward compatibility. You can now pass a list of library names and base
-options when instantiating Tidy. The keep_doc argument is now deprecated
-and does nothing; use PersistentTidy.
+  functional interface (which will lazily create a global Tidy() object) for
+  backward compatibility. You can now pass a list of library names and base
+  options when instantiating Tidy. The keep_doc argument is now deprecated
+  and does nothing; use PersistentTidy.
 
 * 0.2.4: Bugfix for a strange memory allocation corner case in Tidy.
 
@@ -82,13 +82,19 @@ setup(
     author_email="js@jasonstitt.com",
     url="http://countergram.com/open-source/pytidylib/",
     packages=['tidylib'],
+    keywords="html tidy tidylib",
+    license="MIT",
+    zip_safe=True,
     classifiers=[
         'Development Status :: 5 - Production/Stable',
         'Environment :: Other Environment',
         'Intended Audience :: Developers',
         'License :: OSI Approved :: MIT License',
         'Programming Language :: Python',
+        'Programming Language :: Python :: 2',
+        'Programming Language :: Python :: 2.7',
         'Programming Language :: Python :: 3',
+        'Programming Language :: Python :: 3.5',
         'Natural Language :: English',
         'Topic :: Utilities',
         'Topic :: Text Processing :: Markup :: HTML',
