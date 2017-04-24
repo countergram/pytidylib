@@ -71,7 +71,7 @@ Documentation is shipped with the source distribution and is available at
 the `PyTidyLib`_ web page.
 
 .. _`HTML Tidy`: http://www.html-tidy.org/
-.. _`PyTidyLib`: http://countergram.com/open-source/pytidylib/
+.. _`PyTidyLib`: http://countergram.github.io/pytidylib/
 """
 
 VERSION = "0.4.0"
@@ -83,7 +83,7 @@ setup(
     long_description=longdesc,
     author="Jason Stitt",
     author_email="js@jasonstitt.com",
-    url="http://countergram.com/open-source/pytidylib/",
+    url="http://countergram.github.io/pytidylib/",
     packages=['tidylib'],
     keywords="html tidy tidylib",
     license="MIT",

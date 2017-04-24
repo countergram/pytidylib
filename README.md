@@ -9,4 +9,4 @@ print(document)
 print(errors)
 ```
 
-For full documentation, see the docs/ directory.
+For full documentation, see the docs/ directory or http://countergram.github.io/pytidylib/

@@ -87,5 +87,5 @@ Function reference
 .. autofunction:: tidylib.release_tidy_doc
 
 .. _`HTML Tidy`: http://www.html-tidy.org/
-.. _`PyTidyLib`: http://countergram.com/open-source/pytidylib/
+.. _`PyTidyLib`: http://countergram.github.io/pytidylib/
 
