@@ -70,7 +70,7 @@ Docs
 Documentation is shipped with the source distribution and is available at
 the `PyTidyLib`_ web page.
 
-.. _`HTML Tidy`: http://tidy.sourceforge.net/
+.. _`HTML Tidy`: http://www.html-tidy.org/
 .. _`PyTidyLib`: http://countergram.com/open-source/pytidylib/
 """
 

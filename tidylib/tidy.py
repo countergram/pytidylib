@@ -126,8 +126,8 @@ class Tidy(object):
         back.
 
         options (dict): Options passed directly to HTML Tidy; see the HTML Tidy docs
-        (http://tidy.sourceforge.net/docs/quickref.html) or run tidy -help-config
-        from the command line.
+        (http://www.html-tidy.org/documentation/) or run tidy -help-config from the
+        command line.
 
         returns (str, str): The tidied markup and unparsed warning/error messages.
         Warnings and errors are returned just as tidylib returns them.
