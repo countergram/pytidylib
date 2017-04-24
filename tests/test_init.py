@@ -30,3 +30,7 @@ class TestDocs1(unittest.TestCase):
     def test_not_find_lib(self):
         with self.assertRaises(OSError):
             tidy = Tidy(lib_names=[])
+
+    def test_lib_name(self):
+        tidy = Tidy()
+        self.assertIsInstance(tidy.lib_name, str)

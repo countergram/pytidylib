@@ -36,6 +36,9 @@ library's many capabilities include:
 Changes
 =======
 
+* 0.4.0: Updated to setuptools. Updated tox testing to 3.6 (from 3.5) and 2.7.
+  Added a property to get the library path.
+
 * 0.3.2: Initialization bug fix
 
 * 0.3.1: find_library support while still allowing a list of library names
@@ -71,7 +74,7 @@ the `PyTidyLib`_ web page.
 .. _`PyTidyLib`: http://countergram.com/open-source/pytidylib/
 """
 
-VERSION = "0.3.2"
+VERSION = "0.4.0"
 
 setup(
     name="pytidylib",
@@ -94,7 +97,7 @@ setup(
         'Programming Language :: Python :: 2',
         'Programming Language :: Python :: 2.7',
         'Programming Language :: Python :: 3',
-        'Programming Language :: Python :: 3.5',
+        'Programming Language :: Python :: 3.6',
         'Natural Language :: English',
         'Topic :: Utilities',
         'Topic :: Text Processing :: Markup :: HTML',

@@ -101,13 +101,18 @@ class Tidy(object):
 
     @contextmanager
     def _doc_and_sink(self):
-        " Create and cleanup a Tidy document and error sink "
+        """ Create and cleanup a Tidy document and error sink """
         doc = self._tidy.tidyCreate()
         sink = create_sink()
         self._tidy.tidySetErrorSink(doc, sink)
         yield (doc, sink)
         destroy_sink(sink)
         self._tidy.tidyRelease(doc)
+
+    @property
+    def lib_name(self):
+        """ The path or name of the Tidy library (shared object, DLL, etc.) """
+        return self._tidy._name  # I don't believe there's a public method for this in CDLL
 
     def tidy_document(self, text, options=None):
         """ Run a string with markup through HTML Tidy; return the corrected one

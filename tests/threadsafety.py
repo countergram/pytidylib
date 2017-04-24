@@ -19,7 +19,10 @@
 # THE SOFTWARE.
 
 import threading
-from Queue import Queue
+try:
+    from queue import Queue
+except ImportError:
+    from Queue import Queue
 from tidylib import tidy_document
 
 error_queue = Queue()
