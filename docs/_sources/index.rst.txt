@@ -60,7 +60,7 @@ Configuration options
 
 The Python interface allows you to pass options directly to HTML Tidy. For a complete list of options, see the `HTML Tidy Configuration Options Quick Reference`_ or, from the command line, run ``tidy -help-config``.
 
-.. _`HTML Tidy Configuration Options Quick Reference`: http://www.html-tidy.org/docs/quickref.html
+.. _`HTML Tidy Configuration Options Quick Reference`: http://api.html-tidy.org/
 
 This module sets certain default options, as follows::
 
